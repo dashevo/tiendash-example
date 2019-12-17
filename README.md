@@ -23,7 +23,19 @@ apt install -y nginx-light
 ## Usage
 
 ```sh
-docker-compose up
+git clone https://github.com/strophy/btcpayserver-docker
+cd btcpayserver-docker
+export BTCPAY_HOST="104.238.180.251.vultr.com"
+export NBITCOIN_NETWORK="mainnet"
+export BTCPAYGEN_CRYPTO1="dash"
+export BTCPAYGEN_REVERSEPROXY="nginx"
+export BTCPAY_ENABLE_SSH=false
+export REVERSEPROXY_HTTP_PORT=8080
+export REVERSEPROXY_HTTPS_PORT=8443
+export BTCPAYGEN_ADDITIONAL_FRAGMENTS="opt-add-magento.custom"
+export BTCPAYGEN_EXCLUDE_FRAGMENTS="nginx-https;opt-add-tor"
+. ./btcpay-setup.sh -i
+
 ```
 
 ## License
