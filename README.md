@@ -23,6 +23,22 @@ apt install -y nginx-light
 ## Usage
 
 ```sh
+apt update && apt upgrade -y && apt autoremove -y
+curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh && rm get-docker.sh
+curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+adduser strophy
+usermod -aG sudo,docker strophy
+
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+
+echo 'vm.max_map_count = 262144' >> /etc/sysctl.conf
+sysctl -p
+
 git clone https://github.com/strophy/btcpayserver-docker
 cd btcpayserver-docker
 export BTCPAY_HOST="104.238.180.251.vultr.com"
@@ -35,7 +51,6 @@ export REVERSEPROXY_HTTPS_PORT=8443
 export BTCPAYGEN_ADDITIONAL_FRAGMENTS="opt-add-magento.custom"
 export BTCPAYGEN_EXCLUDE_FRAGMENTS="nginx-https;opt-add-tor"
 . ./btcpay-setup.sh -i
-
 ```
 
 ## License
